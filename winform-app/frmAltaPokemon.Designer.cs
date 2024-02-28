@@ -44,6 +44,7 @@ namespace winform_app
             this.urlImagen = new System.Windows.Forms.Label();
             this.txtUrl = new System.Windows.Forms.TextBox();
             this.pictureBoxPokemon = new System.Windows.Forms.PictureBox();
+            this.btnImagen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPokemon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -177,11 +178,22 @@ namespace winform_app
             this.pictureBoxPokemon.TabIndex = 14;
             this.pictureBoxPokemon.TabStop = false;
             // 
+            // btnImagen
+            // 
+            this.btnImagen.Location = new System.Drawing.Point(332, 215);
+            this.btnImagen.Name = "btnImagen";
+            this.btnImagen.Size = new System.Drawing.Size(47, 21);
+            this.btnImagen.TabIndex = 15;
+            this.btnImagen.Text = "Open";
+            this.btnImagen.UseVisualStyleBackColor = true;
+            this.btnImagen.Click += new System.EventHandler(this.btnImagen_Click);
+            // 
             // frmAltaPokemon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(446, 301);
+            this.Controls.Add(this.btnImagen);
             this.Controls.Add(this.pictureBoxPokemon);
             this.Controls.Add(this.txtUrl);
             this.Controls.Add(this.urlImagen);
@@ -224,5 +236,6 @@ namespace winform_app
         private System.Windows.Forms.Label urlImagen;
         private System.Windows.Forms.TextBox txtUrl;
         private System.Windows.Forms.PictureBox pictureBoxPokemon;
+        private System.Windows.Forms.Button btnImagen;
     }
 }

@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using dominio;
 using negocio;
+using System.Configuration;
 
 namespace winform_app
 {
     public partial class frmAltaPokemon : Form
     {
         private Pokemon pokemon = null;
+        private OpenFileDialog archivo = null;
         public frmAltaPokemon()
         {
             InitializeComponent();
@@ -34,11 +37,12 @@ namespace winform_app
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             PokemonNegocio negocio = new PokemonNegocio();
-
             try
             {
                 if (pokemon == null)
+                {
                     pokemon = new Pokemon();
+                }
 
                 pokemon.Numero = int.Parse(txtNumero.Text);
                 pokemon.Nombre = txtNombre.Text;
@@ -56,6 +60,9 @@ namespace winform_app
                 {
                     negocio.agregar(pokemon);
                     MessageBox.Show("Agregado exitosamente");
+                    //GUARDO LA IMAGEN
+                    if(archivo != null && !(txtUrl.Text.ToUpper().Contains("HTTP")))
+                        File.Copy(archivo.FileName, ConfigurationManager.AppSettings["images-folder"] + archivo.SafeFileName);
                 }
                 Close();
             }
@@ -108,6 +115,18 @@ namespace winform_app
             catch (Exception ex)
             {
                 pictureBoxPokemon.Load("https://efectocolibri.com/wp-content/uploads/2021/01/placeholder.png");
+            }
+        }
+
+        private void btnImagen_Click(object sender, EventArgs e)
+        {
+            archivo = new OpenFileDialog();
+
+            archivo.Filter = "jpg|*.jpg;|png|*.png";
+            if(archivo.ShowDialog() == DialogResult.OK)
+            {
+                txtUrl.Text = archivo.FileName;
+                cargarImagen(txtUrl.Text);
             }
         }
     }

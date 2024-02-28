@@ -22,31 +22,21 @@ namespace winform_app
 
         private void frmPokemons_Load(object sender, EventArgs e)
         {
-            PokemonNegocio negocio = new PokemonNegocio();
-            try
-            {
-                listaPokemon = negocio.listar();
-                dgvPokemons.DataSource = listaPokemon;
-                dgvPokemons.Columns["UrlImagen"].Visible = false;
-                dgvPokemons.Columns["Id"].Visible = false;
-                cargarImagen(listaPokemon[0].UrlImagen);
-
-                // estirar dgv
-                foreach (DataGridViewColumn column in dgvPokemons.Columns)
-                {
-                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.ToString());
-            }
+            cargar();
+            comboCampo.Items.Add("Número");
+            comboCampo.Items.Add("Nombre");
+            comboCampo.Items.Add("Descripcion");
+            comboCriterio.Enabled = false;
+            comboClave.Enabled = false;
         }
 
         private void dgvPokemons_SelectionChanged(object sender, EventArgs e)
         {
-            Pokemon seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
-            cargarImagen(seleccionado.UrlImagen);
+            if(dgvPokemons.CurrentRow != null)
+            {
+                Pokemon seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
+                cargarImagen(seleccionado.UrlImagen);
+            }
         }
 
         public void cargarImagen(string imagen)
@@ -75,12 +65,21 @@ namespace winform_app
             {
                 listaPokemon = negocio.listar();
                 dgvPokemons.DataSource = listaPokemon;
-                dgvPokemons.Columns["UrlImagen"].Visible = false;
+                ocultarColumnas();
                 cargarImagen(listaPokemon[0].UrlImagen);
+                extenderCols(dgvPokemons);
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.ToString());
+            }
+        }
+
+        private void extenderCols(DataGridView Data)
+        {
+            foreach (DataGridViewColumn column in dgvPokemons.Columns)
+            {
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
 
@@ -92,6 +91,115 @@ namespace winform_app
             frmAltaPokemon alta = new frmAltaPokemon(seleccionado);
             alta.ShowDialog();
             cargar();
+        }
+
+        // eliminación física del pokemon del registro | borra de la base de datos
+        private void btnEliminarFisico_Click(object sender, EventArgs e)
+        {
+            eliminar();
+        }
+
+        private void btnEliminarLogico_Click(object sender, EventArgs e)
+        {
+            eliminar(true);
+        }
+
+        private void ocultarColumnas()
+        {
+            dgvPokemons.Columns["UrlImagen"].Visible = false;
+            dgvPokemons.Columns["Id"].Visible = false;
+        }
+
+        private void eliminar(bool logico = false)
+        {
+            PokemonNegocio negocio = new PokemonNegocio();
+            Pokemon seleccionado;
+            try
+            {
+                DialogResult respuesta = MessageBox.Show("¿Desea eliminar al pokemon del registro?", "Eliminando...", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (respuesta == DialogResult.Yes)
+                {
+                    seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
+                    if (logico)
+                    {
+                        negocio.eliminarLogico(seleccionado.Id);
+                        MessageBox.Show("Eliminado (Dado de baja)");
+                    }
+                    else
+                    {
+                        negocio.eliminar(seleccionado.Id);
+                        MessageBox.Show("Eliminado correctamente");
+                    }
+                    cargar();
+                }
+                else
+                {
+                    MessageBox.Show("La operación se ha cancelado");
+                }
+
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
+        }
+
+        private void btnFiltroRapido_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PokemonNegocio negocio = new PokemonNegocio();
+                string campo = comboCampo.SelectedItem.ToString();
+                string criterio = comboCriterio.SelectedItem.ToString();
+                string filtro = comboClave.Text;
+                dgvPokemons.DataSource = negocio.filtrar(campo, criterio, filtro);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            List<Pokemon> listaFiltrada;
+            string filtro = txtFiltro.Text.ToLower();
+
+            if (filtro.Length >= 1)
+                // permite buscar dentro de la lista
+                listaFiltrada = listaPokemon.FindAll(x => x.Nombre.ToLower().Contains(filtro));
+
+            else
+                listaFiltrada = listaPokemon;
+
+            dgvPokemons.DataSource = null;
+            dgvPokemons.DataSource = listaFiltrada;
+            extenderCols(dgvPokemons);
+            ocultarColumnas();
+        }
+
+        private void comboCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string opcion = comboCampo.SelectedItem.ToString();
+            comboCriterio.Enabled = true;
+            if(opcion == "Número")
+            {
+                comboCriterio.Items.Clear();
+                comboCriterio.Items.Add("Mayor a: ");
+                comboCriterio.Items.Add("Menor a: ");
+                comboCriterio.Items.Add("Igual a: ");
+            }
+            else
+            {
+                comboCriterio.Items.Clear();
+                comboCriterio.Items.Add("Empieca con: ");
+                comboCriterio.Items.Add("Termina con: ");
+                comboCriterio.Items.Add("Contiene: ");
+            }
+        }
+
+        private void comboCriterio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboClave.Enabled = true;
         }
     }
 }
