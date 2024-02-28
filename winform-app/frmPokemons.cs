@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using dominio;
+using negocio;
+
+namespace winform_app
+{
+    public partial class frmPokemons : Form
+    {
+        private List<Pokemon> listaPokemon;
+        public frmPokemons()
+        {
+            InitializeComponent();
+        }
+
+        private void frmPokemons_Load(object sender, EventArgs e)
+        {
+            PokemonNegocio negocio = new PokemonNegocio();
+            try
+            {
+                listaPokemon = negocio.listar();
+                dgvPokemons.DataSource = listaPokemon;
+                dgvPokemons.Columns["UrlImagen"].Visible = false;
+                dgvPokemons.Columns["Id"].Visible = false;
+                cargarImagen(listaPokemon[0].UrlImagen);
+
+                // estirar dgv
+                foreach (DataGridViewColumn column in dgvPokemons.Columns)
+                {
+                    column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
+        }
+
+        private void dgvPokemons_SelectionChanged(object sender, EventArgs e)
+        {
+            Pokemon seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
+            cargarImagen(seleccionado.UrlImagen);
+        }
+
+        public void cargarImagen(string imagen)
+        {
+            try
+            {
+                pbxPokemon.Load(imagen);
+            }
+            catch (Exception ex)
+            {
+                pbxPokemon.Load("https://efectocolibri.com/wp-content/uploads/2021/01/placeholder.png");
+            }
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            frmAltaPokemon alta = new frmAltaPokemon();
+            alta.ShowDialog();
+            cargar();
+        }
+
+        private void cargar()
+        {
+            PokemonNegocio negocio = new PokemonNegocio();
+            try
+            {
+                listaPokemon = negocio.listar();
+                dgvPokemons.DataSource = listaPokemon;
+                dgvPokemons.Columns["UrlImagen"].Visible = false;
+                cargarImagen(listaPokemon[0].UrlImagen);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            Pokemon seleccionado;
+            seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
+
+            frmAltaPokemon alta = new frmAltaPokemon(seleccionado);
+            alta.ShowDialog();
+            cargar();
+        }
+    }
+}
