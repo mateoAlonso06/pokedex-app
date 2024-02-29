@@ -33,12 +33,37 @@ namespace winform_app
         {
             Close();
         }
-
+        private bool validarFiltro()
+        {
+            if(txtNumero.Text == "" || txtNombre.Text == "" || txtDescripcion.Text == "" || txtUrl.Text == "")
+            {
+                MessageBox.Show("Completar todos los campos");
+                return true;
+            }
+            if (validarNum(txtNumero.Text))
+            {
+                MessageBox.Show("El campo Numero no debe contener letras!!");
+                return true;
+            }
+            return false;
+        }
+        private bool validarNum(string cad)
+        {
+            foreach (var item in cad)
+            {
+                if (!(char.IsNumber(item)))
+                    return true;
+            }
+            return false;
+        }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             PokemonNegocio negocio = new PokemonNegocio();
             try
             {
+                if(validarFiltro())
+                    return;
+
                 if (pokemon == null)
                 {
                     pokemon = new Pokemon();

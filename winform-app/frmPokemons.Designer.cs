@@ -64,6 +64,7 @@ namespace winform_app
             // 
             // pbxPokemon
             // 
+            this.pbxPokemon.BackColor = System.Drawing.Color.Transparent;
             this.pbxPokemon.Location = new System.Drawing.Point(628, 55);
             this.pbxPokemon.Name = "pbxPokemon";
             this.pbxPokemon.Size = new System.Drawing.Size(240, 232);
@@ -104,7 +105,7 @@ namespace winform_app
             this.btnEliminarFisico.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnEliminarFisico.Location = new System.Drawing.Point(174, 293);
             this.btnEliminarFisico.Name = "btnEliminarFisico";
-            this.btnEliminarFisico.Size = new System.Drawing.Size(75, 23);
+            this.btnEliminarFisico.Size = new System.Drawing.Size(101, 23);
             this.btnEliminarFisico.TabIndex = 4;
             this.btnEliminarFisico.Text = "Eliminar Fisico";
             this.btnEliminarFisico.UseVisualStyleBackColor = false;
@@ -115,9 +116,9 @@ namespace winform_app
             this.btnEliminarLogico.BackColor = System.Drawing.Color.Yellow;
             this.btnEliminarLogico.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminarLogico.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnEliminarLogico.Location = new System.Drawing.Point(255, 293);
+            this.btnEliminarLogico.Location = new System.Drawing.Point(281, 293);
             this.btnEliminarLogico.Name = "btnEliminarLogico";
-            this.btnEliminarLogico.Size = new System.Drawing.Size(75, 23);
+            this.btnEliminarLogico.Size = new System.Drawing.Size(108, 23);
             this.btnEliminarLogico.TabIndex = 5;
             this.btnEliminarLogico.Text = "Eliminar logico";
             this.btnEliminarLogico.UseVisualStyleBackColor = false;
@@ -239,6 +240,7 @@ namespace winform_app
             this.Controls.Add(this.pbxPokemon);
             this.Controls.Add(this.dgvPokemons);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.MaximizeBox = false;
             this.Name = "frmPokemons";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pokedex ";

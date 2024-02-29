@@ -36,6 +36,15 @@ namespace winform_app
             {
                 Pokemon seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
                 cargarImagen(seleccionado.UrlImagen);
+                btnModificar.Enabled = true;
+                btnEliminarFisico.Enabled = true;
+                btnEliminarLogico.Enabled = true;
+            }
+            else
+            {
+                btnModificar.Enabled = false;
+                btnEliminarFisico.Enabled = false;
+                btnEliminarLogico.Enabled = false;
             }
         }
 
@@ -143,12 +152,46 @@ namespace winform_app
                 MessageBox.Show(exc.ToString());
             }
         }
-
+        private bool validarFiltro()
+        {
+            if(comboCampo.SelectedIndex < 0 || comboCriterio.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor, seleccione el campo para filtrar.");
+                return true;
+            }
+            if(comboCampo.SelectedItem.ToString() == "Número")
+            {
+                if(string.IsNullOrEmpty(comboClave.Text))
+                {
+                    MessageBox.Show("Cargar el valor a filtrar");
+                    return true;
+                }
+                if(!(soloNumeros(comboClave.Text)))
+                {
+                    MessageBox.Show("Ingrese numeros");
+                    return true;
+                }
+            }
+            return false;
+        }
+        private bool soloNumeros(string cadena)
+        {
+            foreach (var item in cadena)
+            {
+                if(!(char.IsNumber(item)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         private void btnFiltroRapido_Click(object sender, EventArgs e)
         {
+            PokemonNegocio negocio = new PokemonNegocio();
             try
             {
-                PokemonNegocio negocio = new PokemonNegocio();
+                if (validarFiltro())
+                    return; 
                 string campo = comboCampo.SelectedItem.ToString();
                 string criterio = comboCriterio.SelectedItem.ToString();
                 string filtro = comboClave.Text;
@@ -184,16 +227,16 @@ namespace winform_app
             if(opcion == "Número")
             {
                 comboCriterio.Items.Clear();
-                comboCriterio.Items.Add("Mayor a: ");
-                comboCriterio.Items.Add("Menor a: ");
-                comboCriterio.Items.Add("Igual a: ");
+                comboCriterio.Items.Add("Mayor a:");
+                comboCriterio.Items.Add("Menor a:");
+                comboCriterio.Items.Add("Igual a:");
             }
             else
             {
                 comboCriterio.Items.Clear();
-                comboCriterio.Items.Add("Empieca con: ");
-                comboCriterio.Items.Add("Termina con: ");
-                comboCriterio.Items.Add("Contiene: ");
+                comboCriterio.Items.Add("Empieca con:");
+                comboCriterio.Items.Add("Termina con:");
+                comboCriterio.Items.Add("Contiene:");
             }
         }
 

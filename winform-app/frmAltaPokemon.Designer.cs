@@ -51,6 +51,7 @@ namespace winform_app
             // labelNumero
             // 
             this.labelNumero.AutoSize = true;
+            this.labelNumero.ForeColor = System.Drawing.Color.White;
             this.labelNumero.Location = new System.Drawing.Point(77, 57);
             this.labelNumero.Name = "labelNumero";
             this.labelNumero.Size = new System.Drawing.Size(47, 13);
@@ -60,6 +61,7 @@ namespace winform_app
             // labelNombre
             // 
             this.labelNombre.AutoSize = true;
+            this.labelNombre.ForeColor = System.Drawing.Color.White;
             this.labelNombre.Location = new System.Drawing.Point(74, 83);
             this.labelNombre.Name = "labelNombre";
             this.labelNombre.Size = new System.Drawing.Size(50, 13);
@@ -69,6 +71,7 @@ namespace winform_app
             // labelDescripcion
             // 
             this.labelDescripcion.AutoSize = true;
+            this.labelDescripcion.ForeColor = System.Drawing.Color.White;
             this.labelDescripcion.Location = new System.Drawing.Point(58, 109);
             this.labelDescripcion.Name = "labelDescripcion";
             this.labelDescripcion.Size = new System.Drawing.Size(66, 13);
@@ -98,27 +101,34 @@ namespace winform_app
             // 
             // btnAceptar
             // 
+            this.btnAceptar.BackColor = System.Drawing.Color.Yellow;
+            this.btnAceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAceptar.ForeColor = System.Drawing.Color.Black;
             this.btnAceptar.Location = new System.Drawing.Point(61, 234);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 6;
             this.btnAceptar.Text = " Aceptar";
-            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.UseVisualStyleBackColor = false;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // btnCancelar
             // 
+            this.btnCancelar.BackColor = System.Drawing.Color.Yellow;
+            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelar.ForeColor = System.Drawing.Color.Black;
             this.btnCancelar.Location = new System.Drawing.Point(176, 234);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 7;
             this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // lblTipo
             // 
             this.lblTipo.AutoSize = true;
+            this.lblTipo.ForeColor = System.Drawing.Color.White;
             this.lblTipo.Location = new System.Drawing.Point(93, 160);
             this.lblTipo.Name = "lblTipo";
             this.lblTipo.Size = new System.Drawing.Size(31, 13);
@@ -128,6 +138,7 @@ namespace winform_app
             // lblDebilidad
             // 
             this.lblDebilidad.AutoSize = true;
+            this.lblDebilidad.ForeColor = System.Drawing.Color.White;
             this.lblDebilidad.Location = new System.Drawing.Point(70, 192);
             this.lblDebilidad.Name = "lblDebilidad";
             this.lblDebilidad.Size = new System.Drawing.Size(54, 13);
@@ -155,6 +166,7 @@ namespace winform_app
             // urlImagen
             // 
             this.urlImagen.AutoSize = true;
+            this.urlImagen.ForeColor = System.Drawing.Color.White;
             this.urlImagen.Location = new System.Drawing.Point(38, 135);
             this.urlImagen.Name = "urlImagen";
             this.urlImagen.Size = new System.Drawing.Size(86, 13);
@@ -171,6 +183,7 @@ namespace winform_app
             // 
             // pictureBoxPokemon
             // 
+            this.pictureBoxPokemon.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxPokemon.Location = new System.Drawing.Point(273, 60);
             this.pictureBoxPokemon.Name = "pictureBoxPokemon";
             this.pictureBoxPokemon.Size = new System.Drawing.Size(161, 149);
@@ -180,18 +193,22 @@ namespace winform_app
             // 
             // btnImagen
             // 
+            this.btnImagen.BackColor = System.Drawing.Color.Yellow;
+            this.btnImagen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImagen.ForeColor = System.Drawing.Color.Black;
             this.btnImagen.Location = new System.Drawing.Point(332, 215);
             this.btnImagen.Name = "btnImagen";
             this.btnImagen.Size = new System.Drawing.Size(47, 21);
             this.btnImagen.TabIndex = 15;
             this.btnImagen.Text = "Open";
-            this.btnImagen.UseVisualStyleBackColor = true;
+            this.btnImagen.UseVisualStyleBackColor = false;
             this.btnImagen.Click += new System.EventHandler(this.btnImagen_Click);
             // 
             // frmAltaPokemon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Red;
             this.ClientSize = new System.Drawing.Size(446, 301);
             this.Controls.Add(this.btnImagen);
             this.Controls.Add(this.pictureBoxPokemon);
@@ -209,6 +226,8 @@ namespace winform_app
             this.Controls.Add(this.labelDescripcion);
             this.Controls.Add(this.labelNombre);
             this.Controls.Add(this.labelNumero);
+            this.ForeColor = System.Drawing.Color.Black;
+            this.MaximizeBox = false;
             this.Name = "frmAltaPokemon";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nuevo Pokemon";
